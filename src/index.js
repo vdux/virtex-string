@@ -9,6 +9,7 @@ import {actions} from 'virtex'
  */
 
 const {CREATE_TEXT_NODE, CREATE_ELEMENT} = actions.types
+const {createElement, createTextNode} = actions
 
 /**
  * Virtex string
@@ -17,28 +18,42 @@ const {CREATE_TEXT_NODE, CREATE_ELEMENT} = actions.types
 function string ({dispatch}) {
   return next => action => {
     switch (action.type) {
-      case CREATE_TEXT_NODE
+      case CREATE_TEXT_NODE:
         return action.text
-      case CREATE_ELEMENT
-        return '<' + action.tag + renderAttrs(action.attrs) + '>'
-          + action.children.map(renderChild).join('')
-          + '</' + action.tag + '>'
+      case CREATE_ELEMENT:
+        const {tag, attrs, children} = action
+        return `<${tag}${renderAttrs(attrs)}>${children.join('')}</${tag}>`
     }
-  }
 
-  function renderChild (child) {
-    return typeof child.text !== 'undefined'
-      ? dispatch(createTextNode(child))
-      : dispatch(createElement(child))
+    return next(action)
   }
 
   function renderAttrs (attrs) {
     if (!attrs) return ''
 
-    return ' ' + Object
-      .keys(attrs)
-      .map(key => key + '=' + attrs[key])
-      .join(' ')
+    let str = ''
+
+    for (let key in attrs) {
+      const val = attrs[key]
+
+      if (isValidAttr(val)) {
+        str += ` ${key}="${val}"`
+      }
+    }
+
+    return str
+  }
+
+  function isValidAttr (val) {
+    switch (typeof val) {
+      case 'string':
+      case 'number':
+        return true
+      case 'boolean':
+        return val
+      default:
+        return false
+    }
   }
 }
 

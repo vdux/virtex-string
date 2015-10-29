@@ -10,6 +10,9 @@
     "postpublish": "rm -rf lib"
   },
   "dependencies": {},
+  "peerDependencies": {
+    "virtex": "^0.1.7"
+  },
   "devDependencies": {
     "babel": "^5.8.21",
     "babel-tape-runner": "^1.2.0",

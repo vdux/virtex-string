@@ -3,7 +3,7 @@
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-String rendering backend for virtex
+String rendering backend for [virtex](https://github.com/ashaffer/virtex)
 
 ## Installation
 

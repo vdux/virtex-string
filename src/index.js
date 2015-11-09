@@ -21,8 +21,8 @@ function string ({dispatch}) {
       case CREATE_TEXT_NODE:
         return action.text
       case CREATE_ELEMENT:
-        const {tag, attrs, children} = action
-        return `<${tag}${renderAttrs(attrs)}>${children.join('')}</${tag}>`
+        const {tag, attrs, children} = action.vnode
+        return `<${tag}${renderAttrs(attrs)}>${children.map(c => c.el).join('')}</${tag}>`
     }
 
     return next(action)

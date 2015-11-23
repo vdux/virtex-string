@@ -8,8 +8,7 @@ import {actions} from 'virtex'
  * Actions
  */
 
-const {CREATE_TEXT_NODE, CREATE_ELEMENT} = actions.types
-const {createElement, createTextNode} = actions
+const {CREATE_ELEMENT} = actions.types
 
 /**
  * Virtex string
@@ -17,12 +16,11 @@ const {createElement, createTextNode} = actions
 
 function string ({dispatch}) {
   return next => action => {
-    switch (action.type) {
-      case CREATE_TEXT_NODE:
-        return action.text
-      case CREATE_ELEMENT:
-        const {tag, attrs, children} = action.vnode
-        return `<${tag}${renderAttrs(attrs)}>${children.map(c => c.el).join('')}</${tag}>`
+    if (action.type === CREATE_ELEMENT) {
+      const {type, attrs, children} = action.vnode
+      return type === '#text'
+        ? attrs.nodeValue
+        : `<${type}${renderAttrs(attrs)}>${children.map(c => c.el).join('')}</${type}>`
     }
 
     return next(action)

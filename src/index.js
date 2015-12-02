@@ -17,10 +17,10 @@ const {CREATE_ELEMENT} = actions.types
 function string ({dispatch}) {
   return next => action => {
     if (action.type === CREATE_ELEMENT) {
-      const {type, attrs, children} = action.vnode
+      const {type, props, children} = action.vnode
       return type === '#text'
-        ? attrs.nodeValue
-        : `<${type}${renderAttrs(attrs)}>${children.map(c => c.el).join('')}</${type}>`
+        ? props.nodeValue
+        : `<${type}${renderAttrs(props)}>${children.map(c => c.el).join('')}</${type}>`
     }
 
     return next(action)

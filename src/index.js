@@ -17,16 +17,20 @@ const {CREATE_ELEMENT} = actions.types
 function string ({dispatch}) {
   return next => action => {
     if (action.type === CREATE_ELEMENT) {
-      const {type, props, children} = action.vnode
-      return type === '#text'
-        ? props.nodeValue
-        : `<${type}${renderAttrs(props)}>${children.map(c => c.el).join('')}</${type}>`
+      action.vnode.element = render(action.vnode)
+      return
     }
 
     return next(action)
   }
 
-  function renderAttrs (attrs) {
+  function render ({type, props, children}) {
+    return type === '#text'
+      ? props.nodeValue
+      : `<${type}${stringifyAttrs(props)}>${children.map(c => c.element).join('')}</${type}>`
+  }
+
+  function stringifyAttrs (attrs) {
     if (!attrs) return ''
 
     let str = ''

@@ -2,7 +2,7 @@
   "name": "virtex-string",
   "description": "String rendering backend for virtex",
   "repository": "git://github.com/ashaffer/virtex-string.git",
-  "version": "0.1.4",
+  "version": "0.3.0",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
@@ -10,11 +10,11 @@
     "postpublish": "rm -rf lib"
   },
   "dependencies": {
-    "virtex": "^0.2.0"
+    "virtex": "^0.2.0",
+    "@f/stringify-attrs": "^1.0.2"
   },
   "devDependencies": {
-    "babel": "^5.8.21",
-    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-es2015": "^6.3.13",
     "babel-tape-runner": "^1.2.0",
     "standard": "^5.1.0",
     "tape": "^4.2.0"

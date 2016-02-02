@@ -2,6 +2,7 @@
  * Imports
  */
 
+import ent from 'ent'
 import {actions} from 'virtex'
 import stringifyAttrs from '@f/stringify-attrs'
 
@@ -29,7 +30,7 @@ function string () {
 
 function render ({type, props}, children) {
   return type === '#text'
-    ? props.nodeValue
+    ? ent.encode(String(props.nodeValue))
     : stringifyElement(type, props, children.reduce((acc, child) => acc + child.element, ''))
 }
 

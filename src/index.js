@@ -4,13 +4,14 @@
 
 import ent from 'ent'
 import {actions} from 'virtex'
+import reduce from '@f/reduce-array'
 import stringifyAttrs from '@f/stringify-attrs'
 
 /**
  * Actions
  */
 
-const {CREATE_NODE} = actions.types
+const {CREATE_NODE, UPDATE_NODE} = actions.types
 
 /**
  * Virtex string
@@ -18,7 +19,7 @@ const {CREATE_NODE} = actions.types
 
 function string () {
   return next => action => {
-    if (action.type === CREATE_NODE) {
+    if (action.type === CREATE_NODE || action.type === UPDATE_NODE) {
       const {vnode, children} = action
       vnode.element = render(vnode, children)
       return vnode
@@ -31,7 +32,7 @@ function string () {
 function render ({type, props}, children) {
   return type === '#text'
     ? ent.encode(String(props.nodeValue))
-    : stringifyElement(type, props, children.reduce((acc, child) => acc + child.element, ''))
+    : stringifyElement(type, props, reduce((acc, child) => acc + child.element, '', children))
 }
 
 function stringifyElement (tag, attrs, contents) {

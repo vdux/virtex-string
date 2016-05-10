@@ -6,6 +6,7 @@ import ent from 'ent'
 import {actions} from 'virtex'
 import reduce from '@f/reduce-array'
 import stringifyAttrs from '@f/stringify-attrs'
+import selfClosing from '@f/self-closing-tags'
 
 /**
  * Actions
@@ -36,7 +37,9 @@ function render ({type, props}, children) {
 }
 
 function stringifyElement (tag, attrs, contents) {
-  return `<${tag}${stringifyAttrs(attrs)}>${contents}</${tag}>`
+  return selfClosing.index[tag] && !contents
+    ? `<${tag}${stringifyAttrs(attrs)} />`
+    : `<${tag}${stringifyAttrs(attrs)}>${contents}</${tag}>`
 }
 
 /**

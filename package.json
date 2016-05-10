@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "@f/reduce-array": "^0.2.1",
+    "@f/self-closing-tags": "^1.0.1",
     "@f/stringify-attrs": "^1.0.2",
     "ent": "^2.2.0",
-    "virtex": "^0.3.6"
+    "virtex": "^0.3.10"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",

@@ -37,6 +37,10 @@ function render ({type, props}, children) {
 }
 
 function stringifyElement (tag, attrs, contents) {
+  if (attrs.innerHTML && !contents) {
+    contents = attrs.innerHTML
+    delete attrs.innerHTML
+  }
   return selfClosing.index[tag] && !contents
     ? `<${tag}${stringifyAttrs(attrs)} />`
     : `<${tag}${stringifyAttrs(attrs)}>${contents}</${tag}>`

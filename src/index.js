@@ -3,16 +3,27 @@
  */
 
 import ent from 'ent'
+import has from '@f/has'
 import {actions} from 'virtex'
 import reduce from '@f/reduce-array'
-import stringifyAttrs from '@f/stringify-attrs'
 import selfClosing from '@f/self-closing-tags'
+import stringifyAttrs from '@f/stringify-attrs'
 
 /**
  * Actions
  */
 
 const {CREATE_NODE, UPDATE_NODE} = actions.types
+
+/**
+ * Skippable attributes
+ */
+
+var skipAttrs = {
+  innerHTML: true,
+  textContent: true,
+  nodeValue: true
+}
 
 /**
  * Virtex string
@@ -37,9 +48,15 @@ function render ({type, props}, children) {
 }
 
 function stringifyElement (tag, attrs, contents) {
+  if (attrs && has('innerHTML', attrs) && !contents) {
+    contents = attrs.innerHTML
+  }
+
+  const attrStr = stringifyAttrs(attrs, skipAttrs)
+
   return selfClosing.index[tag] && !contents
-    ? `<${tag}${stringifyAttrs(attrs)} />`
-    : `<${tag}${stringifyAttrs(attrs)}>${contents}</${tag}>`
+    ? `<${tag}${attrStr} />`
+    : `<${tag}${attrStr}>${contents}</${tag}>`
 }
 
 /**

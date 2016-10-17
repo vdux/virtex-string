@@ -10,9 +10,10 @@
     "postpublish": "rm -rf lib"
   },
   "dependencies": {
+    "@f/has": "^1.0.1",
     "@f/reduce-array": "^0.2.1",
     "@f/self-closing-tags": "^1.0.1",
-    "@f/stringify-attrs": "^1.0.2",
+    "@f/stringify-attrs": "^1.0.5",
     "ent": "^2.2.0",
     "virtex": "^0.3.10"
   },
